@@ -1,17 +1,18 @@
+/* === Global === */
 body {
   display: flex;
   font-family: 'Inter', sans-serif;
   margin: 0;
   height: 100vh;
   background-color: #1d2732;
+  color: white;
 }
 
+/* === Sidebar === */
 #sidebar {
   width: 280px;
   background-color: #232f3c;
-  color: white;
   padding: 20px;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -19,7 +20,8 @@ body {
 
 #sidebar h2 {
   color: #3ecdd1;
-  margin-top: 0;
+  margin-top:0;
+  font-weight: 600;
 }
 
 #sidebar input, #sidebar select {
@@ -33,8 +35,8 @@ body {
 
 #sidebar button {
   padding: 10px;
-  border: none;
   border-radius: 6px;
+  border: none;
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s;
@@ -46,7 +48,12 @@ body {
 }
 
 #save-btn:hover {
-  background-color: #2bb2ba;
+  background-color: #35b9c1;
+  color: white;
+}
+
+#delete-btn {
+  background-color: #c84c4c;
   color: white;
 }
 
@@ -54,20 +61,24 @@ body {
   background-color: #e05757;
 }
 
+/* === Dashboard === */
 #dashboard {
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
   padding: 20px;
-  box-sizing: border-box;
   overflow-y: auto;
 }
 
+#dashboard h1 {
+  color: #3ecdd1;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* === KPI Blocks === */
 #kpiContainer {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 12px !important;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   align-items: flex-start;
 }
 
@@ -75,14 +86,13 @@ body {
   width: 220px;
   background-color: #232f3c;
   border: 2px solid #3ecdd1;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 12px;
-  color: white;
   cursor: grab;
-  transition: transform 0.12s, box-shadow 0.12s;
   box-sizing: border-box;
   user-select: none;
   position: relative;
+  transition: transform 0.12s, box-shadow 0.12s;
 }
 
 .kpi-block:hover {
@@ -94,22 +104,23 @@ body {
   color: #3ecdd1;
   margin: 0 0 6px 0;
   font-size: 1.05rem;
+  font-weight: 600;
 }
 
 .kpi-meta {
-  font-size: 0.9rem;
-  color: #dfeff0;
-  margin-bottom: 8px;
+  font-size: 0.85rem;
+  color: #bcdfe0;
+  margin-bottom: 6px;
 }
 
 .kpi-value {
   font-weight: 700;
-  margin-top: 8px;
-  color: #ffffff;
-  background: rgba(255,255,255,0.03);
+  margin-top: 6px;
   padding: 6px 8px;
   border-radius: 6px;
+  background: rgba(255,255,255,0.05);
   text-align: center;
+  font-size: 1.1rem;
 }
 
 .kpi-chart {
