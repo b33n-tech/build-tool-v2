@@ -1,97 +1,70 @@
 let editMode = false;
 
 const toggleBtn = document.getElementById("toggleEdit");
-const uploadSection = document.getElementById("uploadSection");
-const fileInput = document.getElementById("fileInput");
-const dataTable = document.getElementById("dataTable");
+const addBlockBtn = document.getElementById("addBlock");
+const canvas = document.getElementById("canvas");
 
-// Toggle édition / consultatif
+// Toggle mode édition
 toggleBtn.addEventListener("click", () => {
     editMode = !editMode;
-    uploadSection.classList.toggle("hidden", !editMode);
+    addBlockBtn.classList.toggle("hidden", !editMode);
     toggleBtn.textContent = editMode ? "Passer en mode consultatif" : "Activer le mode édition";
-    if(editMode){
-        makeTableEditable();
-    } else {
-        makeTableReadOnly();
-    }
+
+    const blocks = document.querySelectorAll(".block");
+    blocks.forEach(b => {
+        if(editMode) b.classList.add("editable");
+        else b.classList.remove("editable");
+    });
 });
 
-// Gestion des fichiers
-fileInput.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    
-    if(file.name.endsWith(".csv")){
-        reader.onload = function(evt){
-            const text = evt.target.result;
-            displayArray(csvToArray(text));
-        };
-        reader.readAsText(file);
-    } else if(file.name.endsWith(".xlsx")) {
-        reader.onload = function(evt){
-            const data = new Uint8Array(evt.target.result);
-            const workbook = XLSX.read(data, {type:"array"});
-            const firstSheetName = workbook.SheetNames[0];
-            const worksheet = workbook.Sheets[firstSheetName];
-            const json = XLSX.utils.sheet_to_json(worksheet, {header:1});
-            displayArray(json);
-        };
-        reader.readAsArrayBuffer(file);
-    }
+// Ajouter un bloc
+addBlockBtn.addEventListener("click", () => {
+    createBlock("Nouveau bloc");
 });
 
-// Convert CSV en tableau
-function csvToArray(text){
-    return text.trim().split("\n").map(row => row.split(","));
+// Crée un bloc DOM
+function createBlock(text){
+    const block = document.createElement("div");
+    block.classList.add("block");
+    if(editMode) block.classList.add("editable");
+    block.textContent = text;
+
+    // Drag & Drop
+    block.setAttribute("draggable", "true");
+
+    block.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("text/plain", null);
+        block.classList.add("dragging");
+    });
+
+    block.addEventListener("dragend", () => {
+        block.classList.remove("dragging");
+    });
+
+    canvas.appendChild(block);
+    enableDragAndDrop();
 }
 
-// Affichage du tableau
-function displayArray(rows){
-    const thead = dataTable.querySelector("thead");
-    const tbody = dataTable.querySelector("tbody");
-    thead.innerHTML = "";
-    tbody.innerHTML = "";
+// Drag & Drop sur canvas
+function enableDragAndDrop(){
+    const blocks = document.querySelectorAll(".block");
 
-    if(rows.length > 0){
-        const headerRow = document.createElement("tr");
-        rows[0].forEach(cell => {
-            const th = document.createElement("th");
-            th.textContent = cell;
-            headerRow.appendChild(th);
+    blocks.forEach(block => {
+        block.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            const dragging = document.querySelector(".dragging");
+            const bounding = block.getBoundingClientRect();
+            const offset = e.clientY - bounding.top;
+            if(offset > bounding.height / 2){
+                block.after(dragging);
+            } else {
+                block.before(dragging);
+            }
         });
-        thead.appendChild(headerRow);
-
-        rows.slice(1).forEach(r => {
-            const tr = document.createElement("tr");
-            r.forEach(cell => {
-                const td = document.createElement("td");
-                td.textContent = cell;
-                tr.appendChild(td);
-            });
-            tbody.appendChild(tr);
-        });
-    }
-
-    if(editMode) makeTableEditable();
-}
-
-// Mode édition
-function makeTableEditable(){
-    const tds = dataTable.querySelectorAll("tbody td");
-    tds.forEach(td => {
-        td.contentEditable = "true";
-        td.classList.add("editable");
     });
 }
 
-// Mode consultatif
-function makeTableReadOnly(){
-    const tds = dataTable.querySelectorAll("tbody td");
-    tds.forEach(td => {
-        td.contentEditable = "false";
-        td.classList.remove("editable");
-    });
-}
+// Ajout initial de quelques blocs pour prototyper
+createBlock("Bloc 1");
+createBlock("Bloc 2");
+createBlock("Bloc 3");
