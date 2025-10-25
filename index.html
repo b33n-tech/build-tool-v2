@@ -2,30 +2,21 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Build Tools MVP</title>
+    <title>Interface Builder MVP</title>
     <link rel="stylesheet" href="style.css">
-    <!-- SheetJS pour XLSX -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
     <header>
-        <h1>Build Tools MVP</h1>
+        <h1>Interface Builder MVP</h1>
         <button id="toggleEdit">Activer le mode édition</button>
     </header>
 
     <main>
-        <section id="uploadSection" class="hidden">
-            <h2>📂 Upload de fichiers (CSV/XLSX)</h2>
-            <input type="file" id="fileInput" accept=".csv,.xlsx">
-        </section>
+        <div id="canvas" class="canvas">
+            <!-- Les blocs seront insérés ici -->
+        </div>
 
-        <section id="dataSection">
-            <h2>📄 Données</h2>
-            <table id="dataTable">
-                <thead></thead>
-                <tbody></tbody>
-            </table>
-        </section>
+        <button id="addBlock" class="hidden">Ajouter un bloc</button>
     </main>
 
     <script src="script.js"></script>
