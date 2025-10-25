@@ -8,6 +8,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 button {
@@ -23,26 +24,22 @@ button:hover {
     background-color: #0056b3;
 }
 
-.hidden {
-    display: none;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-top: 20px;
+.canvas {
+    min-height: 400px;
     background: white;
+    border: 2px dashed #ccc;
+    padding: 10px;
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
+.block {
+    border: 1px solid #888;
+    padding: 10px;
+    margin: 10px 0;
+    background: #e2e2ff;
+    cursor: move;
 }
 
-th {
-    background-color: #f0f0f0;
-}
-
-.editable {
-    background-color: #ffffcc;
+.block.editable {
+    border: 2px dashed #007bff;
+    background: #f0f8ff;
 }
