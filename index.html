@@ -2,21 +2,20 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Interface Builder MVP</title>
+    <title>Mode Édition / Consultatif</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Interface Builder MVP</h1>
+        <h1>Mini éditeur</h1>
         <button id="toggleEdit">Activer le mode édition</button>
     </header>
 
     <main>
-        <div id="canvas" class="canvas">
-            <!-- Les blocs seront insérés ici -->
+        <div id="displayText">
+            <p>Ceci est du texte en mode consultatif.</p>
         </div>
-
-        <button id="addBlock" class="hidden">Ajouter un bloc</button>
+        <textarea id="editText" class="hidden"></textarea>
     </main>
 
     <script src="script.js"></script>
